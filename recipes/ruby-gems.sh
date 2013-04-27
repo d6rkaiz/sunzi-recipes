@@ -12,9 +12,7 @@ else
         echo 'gems already setup, skiping...'
     else
         echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
-        echo 'gem update --system'
         sunzi.mute "gem update --system"
-        echo 'gem install bundler'
         sunzi.mute "gem install bundler"
     fi
 fi

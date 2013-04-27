@@ -10,5 +10,4 @@ else
     echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
     echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh
     echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
-    source /etc/profile.d/rbenv.sh
 fi

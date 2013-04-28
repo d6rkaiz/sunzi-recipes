@@ -1,18 +1,3 @@
-# mysql server InnoDB setting
-#  for cheap memory & cheap log file size.
-
-if [ "$sunzi_pkg" = 'apt-get' ]; then
-    FILE_PATH = '/etc/mysql/conf.d/mysql_innodb.cnf'
-#elif [ "$sunzi_pkg" = 'yum' ]; then
-#    FILE_PATH = '/etc/mysql/mysql_innodb.cnf'
-else
-    exit;
-fi
-
-if [-f $FILE_PATH ]; then
-  echo 'MySQL InnoDB already set up'
-else
-  cat >> $FILE_PATH <<EOM
 [mysqld]
 #
 # * InnoDB
@@ -30,5 +15,3 @@ innodb_flush_method = O_DIRECT
 innodb_doublewrite = false
 
 default-storage-engine=innodb
-EOM
-fi

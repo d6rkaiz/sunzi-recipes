@@ -8,7 +8,9 @@ else
     if ! which rbenv > /dev/null; then
         source /etc/profile.d/rbenv.sh
     fi
-    rbenv install $1
-    rbenv global $1
-    rbenv rehash
+    if [ ! -d /usr/local/rbenv/versions/$1 ]; then
+        rbenv install $1
+        rbenv global $1
+        rbenv rehash
+    fi
 fi

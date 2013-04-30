@@ -16,7 +16,7 @@ if [ "$sunzi_pkg" = 'apt-get' ]; then
     targetdir='/etc/mysql/conf.d/'
 #elif [ "$sunzi_pkg" = 'yum' ]; then
 #    targetdir='/etc/mysql/'
-#   if grep -Fq '!includedir /etc/mysql/' /etc/my.cnf; then
+#   if ! grep -Fq '!includedir /etc/mysql/' /etc/my.cnf; then
 #       echo '!includedir /etc/mysql/' >> /etc/my.cnf
 #   fi
 else

@@ -1,5 +1,7 @@
 # firewall
 
+echo "Firewall setup."
+echo ""
 sunzi.install "ufw"
 ufw logging off
 ufw default deny

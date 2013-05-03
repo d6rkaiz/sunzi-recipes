@@ -24,7 +24,7 @@ else
 fi
 
 sunzi.install "mysql-server-5.5 libmysqlclient18 libmysqlclient-dev"
-sunzi.mute 'mysql -e "SET GLOBAL innodb_fast_shutdown = 0"'
+sunzi.mute "mysql -e \"SET GLOBAL innodb_fast_shutdown = 0\""
 sunzi.mute "service mysql stop"
 sunzi.mute "mkdir -p $targetdir"
 sunzi.mute "rm -f /var/lib/mysql/ib_logfile?"
@@ -79,3 +79,5 @@ echo "remove privileges test database"
 query "DELETE FROM mysql.db WHERE db='test' OR db='test\\_%';"
 echo "flush privileges"
 query "FLUSH PRIVILEGES;"
+echo ""
+echo "YOU MUST BE SET MySQL PASSWORD!!"

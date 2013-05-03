@@ -24,7 +24,7 @@ else
 fi
 
 sunzi.install "mysql-server-5.5 libmysqlclient18 libmysqlclient-dev"
-sunzi.mute "mysql -e \"SET GLOBAL innodb_fast_shutdown = 0\""
+query "SET GLOBAL innodb_fast_shutdown = 0"
 sunzi.mute "service mysql stop"
 sunzi.mute "mkdir -p $targetdir"
 sunzi.mute "rm -f /var/lib/mysql/ib_logfile?"
@@ -66,7 +66,7 @@ default-character-set=utf8
 character-set-server=utf8
 EOM
 sunzi.mute "service mysql start"
-sunzi.mute "mysql -e \"show variables like \'innodb_version\'\""
+query "show variables like 'innodb_version'"
 
 echo "mysql secure setup start"
 echo "remove anonymous user"

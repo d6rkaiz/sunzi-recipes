@@ -19,4 +19,7 @@ fi
 if ! grep -Fq "AllowUsers $USER" /etc/ssh/sshd_config; then
     echo "AllowUsers $USER" >> /etc/ssh/sshd_config
 fi
-sunzi.mute "service ssh restart"
+#sunzi.mute "service ssh restart"
+echo ""
+echo "pleace check /etc/ssh/sshd_config."
+echo ""

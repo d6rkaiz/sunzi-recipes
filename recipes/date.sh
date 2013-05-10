@@ -1,12 +1,12 @@
-# system tools
+# date
 
-sunzi.install "telnet dnsutils dstat"
-
-if ! sunzi.installed "sysstat"; then
-  sunzi.install 'sysstat'
-  sed -i 's/ENABLED="false"/ENABLED="true"/' /etc/default/sysstat
-  service sysstat restart
+if ! grep -Fq "Etc/UTC" /etc/timezone; then
+  cat > /etc/timezone <<EOM
+Etc/UTC
+EOM
+  dpkg-reconfigure -f noninteractive tzdata
 fi
+
 if ! sunzi.installed "ntp"; then
   sunzi.install 'ntp'
   service ntp stop
@@ -33,11 +33,4 @@ restrict ::1
 
 EOM
   service ntp start
-fi
-
-if ! grep -Fq "Etc/UTC" /etc/timezone; then
-  cat > /etc/timezone <<EOM
-Etc/UTC
-EOM
-  dpkg-reconfigure -f noninteractive tzdata
 fi

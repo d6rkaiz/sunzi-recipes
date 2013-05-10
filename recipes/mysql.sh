@@ -57,6 +57,12 @@ EOM
     targetfile=${targetdir}${cnf}
     rm -f $targetfile
     cat >> $targetfile <<EOM
+#
+# mysql characterset
+#
+# Reference URL:
+#   http://mathiasbynens.be/notes/mysql-utf8mb4
+#
 [client]
 default-character-set = utf8mb4
 

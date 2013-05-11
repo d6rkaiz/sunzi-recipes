@@ -6,9 +6,14 @@ USER=$1
 echo "Deploy User:${USER} create"
 if [ ! -d /home/$USER ]; then
     sunzi.mute "useradd -m -k /etc/skel/ -g users -s /bin/bash $USER"
+fi
+if [ ! -d /home/$USER/.ssh]; then
     mkdir /home/$USER/.ssh
     chmod 700 /home/$USER/.ssh
     chown -R $USER:users /home/$USER/.ssh
+fi
+if ! sunzi.installed "sudo"; then
+    sunzi.install 'sudo'
 fi
 if [ ! -f /etc/sudoers.d/$USER ]; then
     cat >> /etc/sudoers.d/$USER << EOM

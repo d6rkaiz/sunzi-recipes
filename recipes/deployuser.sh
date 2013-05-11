@@ -7,7 +7,7 @@ echo "Deploy User:${USER} create"
 if [ ! -d /home/$USER ]; then
     sunzi.mute "useradd -m -k /etc/skel/ -g users -s /bin/bash $USER"
 fi
-if [ ! -d /home/$USER/.ssh]; then
+if [ ! -d /home/$USER/.ssh ]; then
     mkdir /home/$USER/.ssh
     chmod 700 /home/$USER/.ssh
     chown -R $USER:users /home/$USER/.ssh

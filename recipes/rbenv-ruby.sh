@@ -7,13 +7,15 @@ else
     if ! which rbenv > /dev/null; then
         source /etc/profile.d/rbenv.sh
     fi
-    if [ ! -d /usr/local/rbenv/versions/$1 ]; then
+    if [ -d /usr/local/rbenv/versions/$1 ]; then
+        echo "ruby $1 is already installed, skiping..."
+    else
         echo "Compiling Ruby. take a while..."
         rbenv install $1
         rbenv global $1
-        rbenv rehash
         sunzi.mute "gem update --system"
         sunzi.mute "gem install bundler"
+        rbenv rehash
     fi
     if [ -f ~/.gemrc ]; then
         echo 'gems already setup, skiping...'

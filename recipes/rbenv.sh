@@ -1,7 +1,13 @@
 # rbenv
 
 if [ -d /usr/local/rbenv ]; then
-    echo 'rbenv already installed, skiping...'
+    echo 'rbenv already installed.'
+    echo 'rbenv update start.'
+    cd /usr/local/rbenv
+    git pull
+    cd /usr/local/rbenv/plugins/ruby-build
+    git pull
+    echo 'rbenv update done.'
 else
     echo 'rbenv system wide installing.'
     git clone git://github.com/sstephenson/rbenv.git /usr/local/rbenv

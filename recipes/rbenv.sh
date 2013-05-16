@@ -1,12 +1,17 @@
 # rbenv
 
+git_pull()
+{
+    pushd $1
+    git pull
+    popd
+}
+
 if [ -d /usr/local/rbenv ]; then
     echo 'rbenv already installed.'
     echo 'rbenv update start.'
-    cd /usr/local/rbenv
-    git pull
-    cd /usr/local/rbenv/plugins/ruby-build
-    git pull
+    git_pull "/usr/local/rbenv"
+    git_pull "/usr/local/rbenv/plugins/ruby-build"
     echo 'rbenv update done.'
 else
     echo 'rbenv system wide installing.'

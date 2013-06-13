@@ -49,6 +49,8 @@ innodb_lock_wait_timeout = 20
 innodb_file_per_table = true
 innodb_flush_method = O_DIRECT
 innodb_doublewrite = false
+innodb_large_prefix
+innodb_file_format = Barracuda
 
 default-storage-engine=InnoDB
 EOM

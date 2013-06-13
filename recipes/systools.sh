@@ -1,6 +1,6 @@
 # system tools
 
-sunzi.install "telnet dnsutils dstat"
+sunzi.install "telnet dnsutils dstat lsb-release"
 
 if ! sunzi.installed "sysstat"; then
   sunzi.install 'sysstat'

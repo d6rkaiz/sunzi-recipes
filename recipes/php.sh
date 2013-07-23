@@ -37,7 +37,7 @@ EOM
     site='phpsample'
     targetfile=${sitedir}${site}
     rm -f $targetfile
-    cat >> $targetfile <<EOM
+    cat >> $targetfile <<'EOM'
 # sample php sites
 server {
     server_name _;

@@ -25,6 +25,11 @@ fi
 
 if ! sunzi.installed "mysql-server"; then
     sunzi.install "mysql-server-5.5 libmysqlclient18 libmysqlclient-dev"
+    if sunzi.installed "php5-common"; then
+        if ! sunzi.installed "php5-mysql"; then
+            sunzi.install "php5-mysql"
+        fi
+    fi
     query "SET GLOBAL innodb_fast_shutdown = 0"
     sunzi.mute "service mysql stop"
     sunzi.mute "mkdir -p $targetdir"

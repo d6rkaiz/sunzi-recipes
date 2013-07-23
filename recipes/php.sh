@@ -13,6 +13,10 @@ else
     exit;
 fi
 
+if ! sunzi.installed "nginx"; then
+    sunzi.install "nginx"
+fi
+
 if ! sunzi.installed "php5-common"; then
     sunzi.install "php5 php5-common php5-apc php5-gd php5-fpm php5-cli"
     if sunzi.installed "mysql-server"; then

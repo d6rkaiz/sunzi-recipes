@@ -2,8 +2,7 @@
 
 echo "Firewall setup."
 echo ""
-if ! sunzi.installed "ufw"; then
-  sunzi.install "ufw"
+if sunzi.installed "ufw"; then
   ufw logging off
   ufw default deny
   ufw limit 'OpenSSH'

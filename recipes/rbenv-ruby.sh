@@ -14,7 +14,7 @@ else
         rbenv install $1
         rbenv global $1
         sunzi.mute "gem update --system"
-        sunzi.mute "gem install bundler"
+        sunzi.mute "gem install bundler foreman"
         rbenv rehash
     fi
     if [ -f ~/.gemrc ]; then

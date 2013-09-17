@@ -18,7 +18,7 @@ if ! sunzi.installed "nginx"; then
 fi
 
 if ! sunzi.installed "php5-common"; then
-    sunzi.install "php5 php5-common php5-apc php5-gd php5-fpm php5-cli"
+    sunzi.mute "apt-get install php5 php5-common php5-apc php5-gd php5-fpm php5-cli"
     if sunzi.installed "mysql-server"; then
         if ! sunzi.installed "php5-mysql"; then
             sunzi.install "php5-mysql"

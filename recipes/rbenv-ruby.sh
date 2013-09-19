@@ -37,23 +37,22 @@ else
             echo "rbenv setup is failure. ruby setup is aborting..."
             exit
         fi
+    fi
+    if [ -f ~/.gemrc ]; then
+        echo 'gems already setup, skiping...'
     else
-        if [ -f ~/.gemrc ]; then
-            echo 'gems already setup, skiping...'
-        else
-            echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
-            echo 'gems setup done.'
-        fi
-        if [ -d /usr/local/rbenv/versions/$1 ]; then
-            echo "ruby $1 is already installed, skiping..."
-        else
-            echo "Compiling Ruby. take a while..."
-            rbenv install $1
-            rbenv global $1
-            sunzi.mute "gem update --system"
-            sunzi.mute "gem install bundler foreman"
-            rbenv rehash
-        fi
+        echo 'gem: --no-ri --no-rdoc' > ~/.gemrc
+        echo 'gems setup done.'
+    fi
+    if [ -d /usr/local/rbenv/versions/$1 ]; then
+        echo "ruby $1 is already installed, skiping..."
+    else
+        echo "Compiling Ruby. take a while..."
+        rbenv install $1
+        rbenv global $1
+        sunzi.mute "gem update --system"
+        sunzi.mute "gem install bundler foreman"
+        rbenv rehash
     fi
 fi
 echo "ruby $1 setup done"

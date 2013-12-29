@@ -29,6 +29,8 @@ if ! sunzi.installed "php5-common"; then
     targetfile=${cnfdir}${cnf}
     rm -f $targetfile
     cat >> $targetfile <<EOM
+index index.php index.html index.htm;
+
 # upstream to abstract backend connection for PHP.
 upstream php {
     server unix:/var/run/php5-fpm.sock;

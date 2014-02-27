@@ -1,9 +1,22 @@
 # mysql provision
+# $1: db password
+
+set_passwd () {
+    q="/tmp/sqlquery.$$"
+    echo "set password for root@localhost=password('$1');" > $q
+    mysql -uroot < $q
+    if [ $? -eq 0 ]; then
+        echo " Set Password Success"
+    else
+        echo " Set Password Failed!"
+    fi
+    rm -f $q
+}
 
 query () {
     q="/tmp/sqlquery.$$"
     echo "$1" > $q
-    mysql -uroot < $q
+    mysql -uroot -p$2 < $q
     if [ $? -eq 0 ]; then
         echo " Success"
     else
@@ -14,11 +27,6 @@ query () {
 
 if [ "$sunzi_pkg" = 'apt-get' ]; then
     targetdir='/etc/mysql/conf.d/'
-#elif [ "$sunzi_pkg" = 'yum' ]; then
-#    targetdir='/etc/mysql/'
-#   if ! grep -Fq '!includedir /etc/mysql/' /etc/my.cnf; then
-#       echo '!includedir /etc/mysql/' >> /etc/my.cnf
-#   fi
 else
     exit;
 fi
@@ -32,11 +40,34 @@ if ! sunzi.installed "mysql-server"; then
             sunzi.install "php5-mysql"
         fi
     fi
-    query "SET GLOBAL innodb_fast_shutdown = 0"
+
+    echo "mysql secure setup start"
+    dbpassword=$1
+    echo "set to root password"
+    set_passwd $dbpassword
+    echo "remove anonymous user"
+    query "DELETE FROM mysql.user WHERE user='';" $dbpassword
+    echo "remove remote access user"
+    query "DELETE FROM mysql.user WHERE user='root' AND host NOT IN ('localhost','127.0.0.1','::1');" $dbpassword
+    echo "drop test database"
+    query "DROP DATABASE IF EXISTS test;" $dbpassword
+    echo "remove privileges test database"
+    query "DELETE FROM mysql.db WHERE db='test' OR db='test%';" $dbpassword
+    echo "flush privileges"
+    query "FLUSH PRIVILEGES;" $dbpassword
+
+    echo "setup my.cnf params add/change"
+    echo " >> prepare:innodb_fast_shutdown variables change"
+    query "SET GLOBAL innodb_fast_shutdown = 0" $dbpassword
+
+    echo " >> prepare:mysql service stop"
     sunzi.mute "service mysql stop"
-    sunzi.mute "mkdir -p $targetdir"
+
+    echo " >> prepare:mysql ib_logfile delete"
     sunzi.mute "rm -f /var/lib/mysql/ib_logfile?"
-    echo "MySQL innnodb & characterset configuration setup.."
+
+    echo " >> innnodb & characterset configuration setup.."
+    sunzi.mute "mkdir -p $targetdir"
     cnf="mysql_innodb.cnf"
     targetfile=${targetdir}${cnf}
     rm -f $targetfile
@@ -84,19 +115,6 @@ character-set-server = utf8mb4
 collation-server = utf8mb4_unicode_ci
 EOM
     sunzi.mute "service mysql start"
-    query "show variables like 'innodb_version'"
-
-    echo "mysql secure setup start"
-    echo "remove anonymous user"
-    query "DELETE FROM mysql.user WHERE user='';"
-    echo "remove remote access user"
-    query "DELETE FROM mysql.user WHERE user='root' AND host NOT IN ('localhost','127.0.0.1','::1');"
-    echo "drop test database"
-    query "DROP DATABASE IF EXISTS test;"
-    echo "remove privileges test database"
-    query "DELETE FROM mysql.db WHERE db='test' OR db='test%';"
-    echo "flush privileges"
-    query "FLUSH PRIVILEGES;"
-    echo ""
-    echo "YOU MUST BE SET MySQL PASSWORD!!"
+    query "show variables like 'innodb_version'" $dbpassword
+    echo "setup done."
 fi

@@ -3,12 +3,17 @@
 
 set_passwd () {
     q="/tmp/sqlquery.$$"
-    echo "set password for root@localhost=password('$1');" > $q
+    echo "" > $q
+    for host in localhost 127.0.0.1
+    do
+      echo "set password for root@'$host'=password('$1');" >> $q
+    done
     mysql -uroot < $q
+    echo -n " set password for root: "
     if [ $? -eq 0 ]; then
-        echo " Set Password Success"
+        echo "success"
     else
-        echo " Set Password Failed!"
+        echo "failed!"
     fi
     rm -f $q
 }
@@ -48,7 +53,7 @@ if ! sunzi.installed "mysql-server"; then
     echo "remove anonymous user"
     query "DELETE FROM mysql.user WHERE user='';" $dbpassword
     echo "remove remote access user"
-    query "DELETE FROM mysql.user WHERE user='root' AND host NOT IN ('localhost','127.0.0.1','::1');" $dbpassword
+    query "DELETE FROM mysql.user WHERE user='root' AND host NOT IN ('localhost','127.0.0.1');" $dbpassword
     echo "drop test database"
     query "DROP DATABASE IF EXISTS test;" $dbpassword
     echo "remove privileges test database"

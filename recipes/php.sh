@@ -3,12 +3,6 @@
 if [ "$sunzi_pkg" = 'apt-get' ]; then
     cnfdir='/etc/nginx/conf.d/'
     sitedir='/etc/nginx/sites-available/'
-#elif [ "$sunzi_pkg" = 'yum' ]; then
-#    cnfdir='/etc/nginx/'
-#    sitedir='/etc/nginx/sites-available/'
-#   if ! grep -Fq '!includedir /etc/mysql/' /etc/my.cnf; then
-#       echo '!includedir /etc/mysql/' >> /etc/my.cnf
-#   fi
 else
     exit;
 fi

@@ -1,10 +1,10 @@
 # system tools
 
-sunzi.install "telnet"
-sunzi.install "dnsutils"
-sunzi.install "dstat"
-sunzi.install "lsb-release"
-sunzi.install "ufw"
+applist="telnet dnsutils dstat lsb-release ufw debian-goodies"
+for pkg in ${applist}
+do
+    sunzi.install $pkg
+done
 
 if ! sunzi.installed "sysstat"; then
   sunzi.install 'sysstat'

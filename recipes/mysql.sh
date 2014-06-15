@@ -37,7 +37,7 @@ else
 fi
 
 if ! sunzi.installed "mysql-server"; then
-    sunzi.install "mysql-server-5.5"
+    sunzi.install "mysql-server-5.6"
     sunzi.install "libmysqlclient18"
     sunzi.install "libmysqlclient-dev"
     if sunzi.installed "php5-common"; then
